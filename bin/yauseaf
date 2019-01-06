@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2019 Lars Bergmann
+#
+# GNU GENERAL PUBLIC LICENSE
+#    Version 3, 29 June 2007
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import argparse
+from yauseaf.cli import main
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='A small python tool firing shell commands to erase and format'
+        ' usb sticks.',
+        epilog='Feel free to contact lars@bergmann82.de for questions, suggestions'
+        ' or feature requests'
+    )
+
+    parser.add_argument(
+        'device',
+        help='The device to be erased and formatted. CHOOSE THIS CAREFULLY!',
+        type=str
+    )
+
+    parser.add_argument(
+        '-f',
+        '--filesystem',
+        help='File system to use for usb-stick. Default is ext4.',
+        choices=['ext4', 'ntfs'],
+        type=str,
+        default='ext4'
+    )
+
+    parser.add_argument(
+        '-L',
+        '--label',
+        help='Label to use for new usb stick filesystem. Default is USB-STICK',
+        type=str,
+        default='USB-STICK'
+    )
+
+    parser.add_argument(
+        '-U',
+        '--user',
+        help='User to create mountpoint for in /media/USER',
+        type=str,
+        default='lars'
+    )
+
+    parser.add_argument(
+        '-e',
+        '--erase',
+        help='Fill stick from /dev/zero before creating fileystem.',
+        action='store_true',
+        default=False
+    )
+
+    args = parser.parse_args()
+    main(args)
